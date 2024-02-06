@@ -1,5 +1,6 @@
 package com.example.coursemanager;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
 import androidx.annotation.NonNull;
@@ -43,6 +44,7 @@ public class CourseActivity extends AppCompatActivity {
         db.collection("courses")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @SuppressLint("NotifyDataSetChanged")
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {

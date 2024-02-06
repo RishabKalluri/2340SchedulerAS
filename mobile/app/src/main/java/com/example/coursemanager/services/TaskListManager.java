@@ -1,26 +1,70 @@
 package com.example.coursemanager.services;
 
+import android.util.Log;
 import androidx.annotation.NonNull;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-public class TaskListManager {
-    private FirebaseFirestore db;
 
-    public TaskListManager() {
+import static android.content.ContentValues.TAG;
+
+public class TaskListManager {
+    private static TaskListManager instance = null;
+    private FirebaseFirestore db;
+    private List<Task> taskList;
+
+    private TaskListManager() {
         db = FirebaseService.getDb();
+        taskList = new ArrayList<>();
     }
+
+    public static TaskListManager getInstance() {
+        if (instance == null) {
+            instance = new TaskListManager();
+        }
+        return instance;
+    }
+
+    public List<Task> getTasks() {
+        List<Task> tasks = new ArrayList<>();
+        db.collection("taskLists").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            public void onComplete(@NonNull com.google.android.gms.tasks.Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        Task obj = document.toObject(Task.class);
+                        tasks.add(obj);
+                    }
+                } else {
+                    Log.d(TAG, "Error getting documents: ", task.getException());
+                }
+            }
+        });
+        return tasks;
+    }
+
+    public void addTask(Task task) {
+        taskList.add(task);
+    }
+
+    public void removeTask(Task task) {
+        taskList.remove(task);
+    }
+
     public void addTaskList(String listName) {
         db.collection("taskLists").document(listName).set(new HashMap<>())
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
                         System.out.println("Task list added with name: " + listName);
-                      }
+                    }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
@@ -28,7 +72,7 @@ public class TaskListManager {
                         System.out.println("Error adding task list");
                     }
                 });
-    }`
+    }
 
     public void updateTaskList(String oldListName, String newListName) {
         db.collection("taskLists").document(oldListName).delete()
