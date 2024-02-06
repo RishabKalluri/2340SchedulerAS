@@ -32,12 +32,6 @@
             android:layout_height="wrap_content"
             android:text="Add Course"/>
 
-        <Button
-            android:id="@+id/editButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Edit Course"/>
-
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView

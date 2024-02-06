@@ -32,11 +32,10 @@ public class CourseFragment extends Fragment {
     private CourseManager courseManager;
     private View view;
 
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.activity_course, container, false);
+        view = inflater.inflate(R.layout.activity_course, container, false);
 
         db = FirebaseFirestore.getInstance();
         courseList = new ArrayList<>();
@@ -45,8 +44,9 @@ public class CourseFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         courseAdapter = new CourseAdapter(courseList);
         recyclerView.setAdapter(courseAdapter);
+
         courseManager = new CourseManager();
-        view = inflater.inflate(R.layout.activity_course, container, false);
+
         Button addButton = view.findViewById(R.id.addButton);
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,7 +54,6 @@ public class CourseFragment extends Fragment {
                 addCourse();
             }
         });
-
 
         loadCourses();
 
@@ -81,6 +80,7 @@ public class CourseFragment extends Fragment {
                     }
                 });
     }
+
     private void addCourse() {
         EditText courseNameEditText = view.findViewById(R.id.courseName);
         EditText courseTimeEditText = view.findViewById(R.id.courseTime);
@@ -96,6 +96,8 @@ public class CourseFragment extends Fragment {
         course.setInstructor(courseInstructor);
 
         courseManager.addCourse(course);
-    }
 
+        // Refresh the course list
+        loadCourses();
+    }
 }
