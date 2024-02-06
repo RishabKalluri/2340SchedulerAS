@@ -10,7 +10,6 @@ public class Course implements Serializable {
     private String professor;
     private String classSection;
     private String location;
-    private String roomNumber;
 
     public Course(String courseName, String time, String instructor, String daysOfWeek, String professor, String classSection, String location, String roomNumber) {
         this.courseName = courseName;
@@ -20,7 +19,6 @@ public class Course implements Serializable {
         this.professor = professor;
         this.classSection = classSection;
         this.location = location;
-        this.roomNumber = roomNumber;
     }
 
     public Course() {
@@ -54,9 +52,6 @@ public class Course implements Serializable {
         return location;
     }
 
-    public String getRoomNumber() {
-        return roomNumber;
-    }
 
     public void setCourseName(String courseName) {
         this.courseName = courseName;
@@ -84,9 +79,5 @@ public class Course implements Serializable {
 
     public void setLocation(String location) {
         this.location = location;
-    }
-
-    public void setRoomNumber(String roomNumber) {
-        this.roomNumber = roomNumber;
     }
 }

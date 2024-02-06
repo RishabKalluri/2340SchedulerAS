@@ -31,8 +31,6 @@ public class EditCourseFragment extends Fragment {
         TextView professorTextView = view.findViewById(R.id.professorTextView);
         TextView classSectionTextView = view.findViewById(R.id.classSectionTextView);
         TextView locationTextView = view.findViewById(R.id.locationTextView);
-        TextView roomNumberTextView = view.findViewById(R.id.roomNumberTextView);
-
         if (clickedCourse != null) {
             courseNameTextView.setText(clickedCourse.getCourseName());
             courseTimeTextView.setText(clickedCourse.getTime());
@@ -41,7 +39,6 @@ public class EditCourseFragment extends Fragment {
             professorTextView.setText(clickedCourse.getProfessor());
             classSectionTextView.setText(clickedCourse.getClassSection());
             locationTextView.setText(clickedCourse.getLocation());
-            roomNumberTextView.setText(clickedCourse.getRoomNumber());
         }
 
         return view;
