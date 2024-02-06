@@ -1,11 +1,11 @@
-package com.example.coursemanager;// com.example.coursemanager.CourseAdapter.java
+package com.example.coursemanager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import com.example.coursemanager.services.Course;
+import com.example.coursemanager    .services.Course;
 import java.util.List;
 
 public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseViewHolder> {
@@ -27,7 +27,6 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
     public void onBindViewHolder(@NonNull CourseViewHolder holder, int position) {
         Course course = courseList.get(position);
         holder.courseName.setText(course.getCourseName());
-        // Bind other course details to the UI elements here
     }
 
     @Override
