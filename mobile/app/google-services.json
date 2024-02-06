@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "661733381579",
+    "project_id": "coursemanager-214fb",
+    "storage_bucket": "coursemanager-214fb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:661733381579:android:aa7c5ba0e9e57fb727124e",
+        "android_client_info": {
+          "package_name": "com.example.coursemanager"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyATpOhsAb1djmkUxIrfmdUN72tjZw4wceg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
