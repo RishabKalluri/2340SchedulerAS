@@ -26,14 +26,22 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull TaskViewHolder holder, int position) {
-        Task task = taskList.get(position);
-        holder.taskName.setText(task.getTaskName());
-        // Bind other task details to the UI elements here
+        if (taskList != null && !taskList.isEmpty()) {
+            Task task = taskList.get(position);
+            holder.taskName.setText(task.getTaskName());
+            // Bind other task details to the UI elements here
+        }
     }
 
     @Override
     public int getItemCount() {
-        return taskList.size();
+        return taskList != null ? taskList.size() : 0;
+    }
+
+    // Method to update the list and refresh the RecyclerView
+    public void updateTasks(List<Task> tasks) {
+        taskList = tasks;
+        notifyDataSetChanged();
     }
 
     public class TaskViewHolder extends RecyclerView.ViewHolder {
@@ -42,6 +50,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         public TaskViewHolder(View view) {
             super(view);
             taskName = view.findViewById(R.id.taskName);
+            // Initialize other views here
         }
     }
 }

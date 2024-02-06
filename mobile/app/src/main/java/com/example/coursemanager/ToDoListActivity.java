@@ -42,18 +42,17 @@ public class ToDoListActivity extends AppCompatActivity {
         taskListManager.getTasks()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
+                    public void onComplete(@NonNull com.google.android.gms.tasks.Task<QuerySnapshot> firebaseTask) {
+                        if (firebaseTask.isSuccessful() && firebaseTask.getResult() != null) {
                             taskList.clear();
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Task task = document.toObject(Task.class);
-                                taskList.add(task);
+                            for (QueryDocumentSnapshot document : firebaseTask.getResult()) {
+                                com.example.coursemanager.services.Task myTask = document.toObject(com.example.coursemanager.services.Task.class);
+                                taskList.add(myTask);
                             }
                             taskAdapter.notifyDataSetChanged();
                         } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
+                            Log.d(TAG, "Error getting documents: ", firebaseTask.getException());
                         }
                     }
                 });
     }
-}

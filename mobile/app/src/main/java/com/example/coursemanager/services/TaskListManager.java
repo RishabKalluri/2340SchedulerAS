@@ -20,7 +20,7 @@ public class TaskListManager {
                     @Override
                     public void onSuccess(Void aVoid) {
                         System.out.println("Task list added with name: " + listName);
-                    }
+                      }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
@@ -28,7 +28,7 @@ public class TaskListManager {
                         System.out.println("Error adding task list");
                     }
                 });
-    }
+    }`
 
     public void updateTaskList(String oldListName, String newListName) {
         db.collection("taskLists").document(oldListName).delete()
