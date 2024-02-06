@@ -20,6 +20,10 @@ public class Course {
         this.location = location;
         this.roomNumber = roomNumber;
     }
+
+    public Course() {
+    }
+
     public String getCourseName() {
         return courseName;
     }

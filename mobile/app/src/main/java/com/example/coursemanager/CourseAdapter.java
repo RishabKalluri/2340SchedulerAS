@@ -1,11 +1,14 @@
 package com.example.coursemanager;
+
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import com.example.coursemanager    .services.Course;
+import com.example.coursemanager.services.Course;
 import java.util.List;
 
 public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseViewHolder> {
@@ -24,9 +27,19 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CourseViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull CourseViewHolder holder, @SuppressLint("RecyclerView") int position) {
         Course course = courseList.get(position);
         holder.courseName.setText(course.getCourseName());
+        holder.courseTime.setText(course.getTime());
+        holder.courseInstructor.setText(course.getInstructor());
+
+        holder.deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                courseList.remove(position);
+                notifyDataSetChanged();
+            }
+        });
     }
 
     @Override
@@ -36,10 +49,16 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
 
     public class CourseViewHolder extends RecyclerView.ViewHolder {
         public TextView courseName;
+        public TextView courseTime;
+        public TextView courseInstructor;
+        public Button deleteButton;
 
         public CourseViewHolder(View view) {
             super(view);
             courseName = view.findViewById(R.id.courseName);
+            courseTime = view.findViewById(R.id.courseTime);
+            courseInstructor = view.findViewById(R.id.courseInstructor);
+            deleteButton = view.findViewById(R.id.deleteButton);
         }
     }
 }
