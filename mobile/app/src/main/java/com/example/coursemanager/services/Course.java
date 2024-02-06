@@ -1,6 +1,8 @@
 package com.example.coursemanager.services;
 
-public class Course {
+import java.io.Serializable;
+
+public class Course implements Serializable {
     private String courseName;
     private String time;
     private String instructor;

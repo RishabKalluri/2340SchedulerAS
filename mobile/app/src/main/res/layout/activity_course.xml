@@ -1,43 +1,53 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
     <LinearLayout
-        android:id="@+id/inputForm"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
+            android:id="@+id/inputForm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
 
         <EditText
                 android:id="@+id/courseName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Course Name"/>
-        <EditText
-            android:id="@+id/courseTime"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Course Time"/>
 
         <EditText
-            android:id="@+id/courseInstructor"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Course Instructor"/>
+                android:id="@+id/courseTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Course Time"/>
 
-        <Button
-            android:id="@+id/addButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Add Course"/>
-
+        <EditText
+                android:id="@+id/courseInstructor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Course Instructor"/>
     </LinearLayout>
+
+    <FrameLayout
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="167dp" android:layout_alignParentTop="true">
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/addButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_marginEnd="@dimen/fab_margin"
+                android:layout_marginBottom="16dp"
+                app:srcCompat="@android:drawable/ic_dialog_email"/>
+    </FrameLayout>
 
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/inputForm" android:layout_marginTop="1dp"/>
+            android:layout_below="@id/container" />
 
 </RelativeLayout>

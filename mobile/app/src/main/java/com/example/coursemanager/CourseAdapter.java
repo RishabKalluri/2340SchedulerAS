@@ -13,6 +13,15 @@ import java.util.List;
 
 public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseViewHolder> {
     private List<Course> courseList;
+    private OnItemClickListener listener;
+
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
+    }
 
     public CourseAdapter(List<Course> courseList) {
         this.courseList = courseList;
@@ -23,7 +32,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
     public CourseViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.course_item, parent, false);
-        return new CourseViewHolder(itemView);
+        return new CourseViewHolder(itemView, listener);
     }
 
     @Override
@@ -53,12 +62,24 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
         public TextView courseInstructor;
         public Button deleteButton;
 
-        public CourseViewHolder(View view) {
+        public CourseViewHolder(View view, OnItemClickListener listener) {
             super(view);
             courseName = view.findViewById(R.id.courseName);
             courseTime = view.findViewById(R.id.courseTime);
             courseInstructor = view.findViewById(R.id.courseInstructor);
             deleteButton = view.findViewById(R.id.deleteButton);
+
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            listener.onItemClick(position);
+                        }
+                    }
+                }
+            });
         }
     }
 }

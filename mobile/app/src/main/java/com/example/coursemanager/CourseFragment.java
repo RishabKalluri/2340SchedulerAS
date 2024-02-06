@@ -45,6 +45,24 @@ public class CourseFragment extends Fragment {
         courseAdapter = new CourseAdapter(courseList);
         recyclerView.setAdapter(courseAdapter);
 
+        // Add an item click listener to the RecyclerView
+        courseAdapter.setOnItemClickListener(new CourseAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                Course clickedCourse = courseList.get(position);
+
+                EditCourseFragment editCourseFragment = new EditCourseFragment();
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("clickedCourse", clickedCourse);
+                editCourseFragment.setArguments(bundle);
+
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.container, editCourseFragment)
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+
         courseManager = new CourseManager();
 
         Button addButton = view.findViewById(R.id.addButton);
