@@ -1,9 +1,8 @@
 package com.example.coursemanager.services;
-
 import androidx.annotation.NonNull;
 import com.example.coursemanager.services.Course;
 import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
+    import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
