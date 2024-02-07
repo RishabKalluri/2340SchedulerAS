@@ -57,8 +57,13 @@ public class CourseFragment extends Fragment {
                         if (task.isSuccessful()) {
                             courseList.clear();
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                Course course = document.toObject(Course.class);
-                                courseList.add(course);
+                                try {
+                                    Course course = document.toObject(Course.class);
+                                    courseList.add(course);
+                                    Log.d(TAG, "Course added: " + course.toString());
+                                } catch (RuntimeException e) {
+                                    Log.e(TAG, "Error converting document to Course: ", e);
+                                }
                             }
                             courseAdapter.notifyDataSetChanged();
                         } else {
