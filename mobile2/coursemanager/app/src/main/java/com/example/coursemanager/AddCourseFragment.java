@@ -1,36 +1,37 @@
 package com.example.coursemanager;
 
-import androidx.appcompat.app.AppCompatActivity;
-import com.example.coursemanager.services.AppDatabase;
-import com.example.coursemanager.services.CourseDao;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import androidx.fragment.app.Fragment;
 import androidx.room.Room;
+import com.example.coursemanager.services.AppDatabase;
 import com.example.coursemanager.services.Course;
+import com.example.coursemanager.services.CourseDao;
 
-public class AddCourseActivity extends AppCompatActivity {
+public class AddCourseFragment extends Fragment {
     private AppDatabase db;
     private CourseDao courseDao;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_add_course);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_add_course, container, false);
 
-        db = Room.databaseBuilder(getApplicationContext(),
+        db = Room.databaseBuilder(getActivity().getApplicationContext(),
                 AppDatabase.class, "course-database").allowMainThreadQueries().build();
         courseDao = db.courseDao();
 
-        final EditText courseName = findViewById(R.id.course_name);
-        final EditText time = findViewById(R.id.time);
-        final EditText instructor = findViewById(R.id.instructor);
-        final EditText daysOfWeek = findViewById(R.id.days_of_week);
-        final EditText classSection = findViewById(R.id.class_section);
-        final EditText location = findViewById(R.id.location);
+        final EditText courseName = view.findViewById(R.id.course_name);
+        final EditText time = view.findViewById(R.id.time);
+        final EditText instructor = view.findViewById(R.id.instructor);
+        final EditText daysOfWeek = view.findViewById(R.id.days_of_week);
+        final EditText classSection = view.findViewById(R.id.class_section);
+        final EditText location = view.findViewById(R.id.location);
 
-        Button addButton = findViewById(R.id.add_button);
+        Button addButton = view.findViewById(R.id.add_button);
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -50,8 +51,9 @@ public class AddCourseActivity extends AppCompatActivity {
                 course.setLocation(locationText);
 
                 courseDao.insertCourse(course);
-                finish();
             }
         });
+
+        return view;
     }
 }

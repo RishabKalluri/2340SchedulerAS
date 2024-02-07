@@ -3,17 +3,14 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity
-public class Course {
+public class Exam {
     @PrimaryKey(autoGenerate = true)
     private int id;
-
+    private String examName;
     private String courseName;
     private String time;
-    private String instructor;
-    private String daysOfWeek;
-    private String classSection;
+    private String date;
     private String location;
-
 
     public int getId() {
         return id;
@@ -39,28 +36,19 @@ public class Course {
         this.time = time;
     }
 
-    public String getInstructor() {
-        return instructor;
+    public String getExamName() {
+        return examName;
+    }
+    public void setExamName(String examName) {
+        this.examName = examName;
     }
 
-    public void setInstructor(String instructor) {
-        this.instructor = instructor;
+    public String getDate() {
+        return date;
     }
 
-    public String getDaysOfWeek() {
-        return daysOfWeek;
-    }
-
-    public void setDaysOfWeek(String daysOfWeek) {
-        this.daysOfWeek = daysOfWeek;
-    }
-
-    public String getClassSection() {
-        return classSection;
-    }
-
-    public void setClassSection(String classSection) {
-        this.classSection = classSection;
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public String getLocation() {

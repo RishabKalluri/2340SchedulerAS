@@ -1,21 +1,10 @@
 package com.example.coursemanager;
 
-import android.annotation.SuppressLint;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.text.InputType;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.PopupMenu;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -24,32 +13,29 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
-
 import com.example.coursemanager.services.AppDatabase;
-import com.example.coursemanager.services.Course;
-import com.example.coursemanager.services.CourseDao;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.example.coursemanager.services.Exam;
+import com.example.coursemanager.services.ExamDao;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CourseFragment extends Fragment {
+public class ExamFragment extends Fragment {
     private AppDatabase db;
-    private CourseDao courseDao;
-    private List<Course> courseList;
+    private ExamDao examDao;
+    private List<Exam> examList;
     private RecyclerView recyclerView;
-    private CourseAdapter courseAdapter;
-
+    private ExamAdapter examAdapter;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_course, container, false);
+        View view = inflater.inflate(R.layout.fragment_exam, container, false);
 
         db = Room.databaseBuilder(getActivity().getApplicationContext(),
-                AppDatabase.class, "course-database")
+                AppDatabase.class, "exam-database")
                 .fallbackToDestructiveMigration()
                 .build();
-        courseDao = db.courseDao();
+        examDao = db.examDao();
 
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -58,7 +44,7 @@ public class CourseFragment extends Fragment {
             public void onClick(View v) {
                 int position = (int) v.getTag();
                 Bundle bundle = new Bundle();
-                bundle.putInt("coursePosition", position);
+                bundle.putInt("examPosition", position);
             }
         };
 
@@ -69,27 +55,36 @@ public class CourseFragment extends Fragment {
             }
         };
 
-        courseAdapter = new CourseAdapter(new ArrayList<>(), onEditClickListener, onDeleteClickListener);
-        recyclerView.setAdapter(courseAdapter);
-        Button button = view.findViewById(R.id.nav_to_exam_button);
+        examAdapter = new ExamAdapter(new ArrayList<>(), onEditClickListener, onDeleteClickListener);
+        recyclerView.setAdapter(examAdapter);
+        View nav_button = view.findViewById(R.id.add_button);
+        nav_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Navigation.findNavController(view).navigate(R.id.action_examFragment_to_courseFragment);
+            }
+        });
+
+        Button button = view.findViewById(R.id.exam_to_course_button);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Navigation.findNavController(v).navigate(R.id.action_courseFragment_to_examFragment);
+                Navigation.findNavController(v).navigate(R.id.action_examFragment_to_courseFragment);
             }
         });
-        loadCourses();
+
+        loadExams();
 
         return view;
     }
 
-    private void loadCourses() {
-        courseDao.getAllCourses().observe(getViewLifecycleOwner(), new Observer<List<Course>>() {
+    private void loadExams() {
+        examDao.getAllExams().observe(getViewLifecycleOwner(), new Observer<List<Exam>>() {
             @Override
-            public void onChanged(List<Course> courses) {
-                courseList = courses;
-                courseAdapter.setCourses(courseList);
-                courseAdapter.notifyDataSetChanged();
+            public void onChanged(List<Exam> exams) {
+                examList = exams;
+                examAdapter.setExams(examList);
+                examAdapter.notifyDataSetChanged();
             }
         });
     }

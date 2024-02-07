@@ -5,7 +5,8 @@ import androidx.room.RoomDatabase;
 import com.example.coursemanager.services.Course;
 import com.example.coursemanager.services.CourseDao;
 
-@Database(entities = {Course.class}, version = 1)
+@Database(entities = {Course.class, Exam.class}, version = 2)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract CourseDao courseDao();
+    public abstract ExamDao examDao();
 }
