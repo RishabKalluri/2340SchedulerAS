@@ -1,5 +1,6 @@
 package com.example.coursemanager.services;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -12,7 +13,7 @@ import java.util.List;
 @Dao
 public interface CourseDao {
     @Query("SELECT * FROM Course")
-    List<Course> getAllCourses();
+    LiveData<List<Course>> getAllCourses();
 
     @Insert
     void insertCourse(Course course);
