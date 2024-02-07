@@ -18,6 +18,9 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
     public CourseAdapter(List<Course> courseList) {
         this.courseList = courseList;
     }
+    public void setCourses(List<Course> courseList) {
+        this.courseList = courseList;
+    }
 
     @NonNull
     @Override
@@ -31,8 +34,11 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
     public void onBindViewHolder(@NonNull CourseViewHolder holder, @SuppressLint("RecyclerView") int position) {
         Course course = courseList.get(position);
         holder.courseName.setText(course.getCourseName());
-        holder.courseTime.setText(course.getTime());
-        holder.courseInstructor.setText(course.getInstructor());
+        holder.time.setText(course.getTime());
+        holder.instructor.setText(course.getInstructor());
+        holder.daysOfWeek.setText(course.getDaysOfWeek());
+        holder.classSection.setText(course.getClassSection());
+        holder.location.setText(course.getLocation());
 
         holder.deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,15 +56,21 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
 
     public class CourseViewHolder extends RecyclerView.ViewHolder {
         public TextView courseName;
-        public TextView courseTime;
-        public TextView courseInstructor;
+        public TextView time;
+        public TextView instructor;
+        public TextView daysOfWeek;
+        public TextView classSection;
+        public TextView location;
         public Button deleteButton;
 
         public CourseViewHolder(View view) {
             super(view);
             courseName = view.findViewById(R.id.courseName);
-            courseTime = view.findViewById(R.id.courseTime);
-            courseInstructor = view.findViewById(R.id.courseInstructor);
+            time = view.findViewById(R.id.time);
+            instructor = view.findViewById(R.id.instructor);
+            daysOfWeek = view.findViewById(R.id.daysOfWeek);
+            classSection = view.findViewById(R.id.classSection);
+            location = view.findViewById(R.id.location);
             deleteButton = view.findViewById(R.id.deleteButton);
         }
     }
