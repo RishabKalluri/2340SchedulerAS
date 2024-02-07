@@ -53,6 +53,13 @@ public class CourseFragment extends Fragment {
 
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        Button addButton = view.findViewById(R.id.add_button);
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(v).navigate(R.id.addCourseFragment);
+            }
+        });
         View.OnClickListener onEditClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {

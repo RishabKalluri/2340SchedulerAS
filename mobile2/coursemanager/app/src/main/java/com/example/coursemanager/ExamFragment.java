@@ -48,6 +48,7 @@ public class ExamFragment extends Fragment {
             }
         };
 
+
         View.OnClickListener onDeleteClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,11 +58,12 @@ public class ExamFragment extends Fragment {
 
         examAdapter = new ExamAdapter(new ArrayList<>(), onEditClickListener, onDeleteClickListener);
         recyclerView.setAdapter(examAdapter);
-        View nav_button = view.findViewById(R.id.add_button);
-        nav_button.setOnClickListener(new View.OnClickListener() {
+
+        Button addButton = view.findViewById(R.id.add_button);
+        addButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Navigation.findNavController(view).navigate(R.id.action_examFragment_to_courseFragment);
+            public void onClick(View v) {
+                Navigation.findNavController(v).navigate(R.id.addExamFragment);
             }
         });
 

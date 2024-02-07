@@ -14,8 +14,16 @@
         <action
                 android:id="@+id/action_courseFragment_to_addCourseFragment"
                 app:destination="@id/addCourseFragment"/>
+        <action
+                android:id="@+id/action_courseFragment_to_examFragment"
+                app:destination="@id/examFragment" />
     </fragment>
-w
+    <fragment
+            android:id="@+id/addExamFragment"
+            android:name="com.example.coursemanager.AddExamFragment"
+            android:label="@string/add_exam_fragment"
+            tools:layout="@layout/fragment_add_exam">
+    </fragment>
     <fragment
             android:id="@+id/addCourseFragment"
             android:name="com.example.coursemanager.AddCourseFragment"
@@ -35,19 +43,13 @@ w
     <fragment
             android:id="@+id/examFragment"
             android:name="com.example.coursemanager.ExamFragment"
-            android:label="ExamFragment" >
+            android:label="Exams" >
         <action
                 android:id="@+id/action_examFragment_to_courseFragment"
-                app:destination="@id/courseFragment" />
-    </fragment>
-
-    <fragment
-            android:id="@+id/courseFragment"
-            android:name="com.example.coursemanager.CourseFragment"
-            android:label="CourseFragment" >
+                app:destination="@id/fragment_course" />
         <action
-                android:id="@+id/action_courseFragment_to_examFragment"
-                app:destination="@id/examFragment" />
+                android:id="@+id/action_examFragment_to_addExamFragment"
+                app:destination="@id/addExamFragment"/>
     </fragment>
 
 </navigation>
