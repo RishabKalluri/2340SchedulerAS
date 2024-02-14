@@ -1,5 +1,4 @@
 package com.example.coursemanager;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,19 +8,25 @@ import androidx.annotation.NonNull;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.coursemanager.services.Course;
-
+import com.example.coursemanager.services.CourseDao;
 import java.util.List;
 import android.os.Bundle;
+import java.util.concurrent.Executors;
+import android.os.Handler;
+import android.os.Looper;
 
 public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseViewHolder> {
     private List<Course> courseList;
+    private CourseDao courseDao;
+
     private static View.OnClickListener onEditClickListener;
     private View.OnClickListener onDeleteClickListener;
 
-    public CourseAdapter(List<Course> courseList, View.OnClickListener onEditClickListener, View.OnClickListener onDeleteClickListener) {
+    public CourseAdapter(List<Course> courseList, CourseDao courseDao, View.OnClickListener onEditClickListener, View.OnClickListener onDeleteClickListener) {
         this.courseList = courseList;
         this.onEditClickListener = onEditClickListener;
         this.onDeleteClickListener = onDeleteClickListener;
+        this.courseDao = courseDao;
     }
 
     public void setCourses(List<Course> courseList) {
@@ -52,9 +57,18 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
 
         holder.deleteButton.setOnClickListener(v -> {
             int currentPosition = (int) v.getTag();
-            courseList.remove(currentPosition);
-            notifyItemRemoved(currentPosition);
-            notifyItemRangeChanged(currentPosition, courseList.size());
+            Course courseToDelete = courseList.get(currentPosition);
+
+            Executors.newSingleThreadExecutor().execute(() -> {
+                courseDao.deleteCourse(courseToDelete);
+
+                // Run on UI thread
+                new Handler(Looper.getMainLooper()).post(() -> {
+                    courseList.remove(currentPosition);
+                    notifyItemRemoved(currentPosition);
+                    notifyItemRangeChanged(currentPosition, courseList.size());
+                });
+            });
         });
 
         holder.editButton.setOnClickListener(v -> {

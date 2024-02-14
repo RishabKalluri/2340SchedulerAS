@@ -1,6 +1,8 @@
 package com.example.coursemanager;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,21 +10,30 @@ import android.widget.Button;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import com.example.coursemanager.services.Course;
 import com.example.coursemanager.services.Exam;
 
+import java.util.ArrayList;
+import java.util.concurrent.Executors;
+import android.os.Handler;
+import android.os.Looper;
+import com.example.coursemanager.services.ExamDao;
+
 import java.util.List;
+import java.util.concurrent.Executors;
 
 public class ExamAdapter extends RecyclerView.Adapter<ExamAdapter.ExamViewHolder> {
     private List<Exam> examList;
     private static View.OnClickListener onEditClickListener;
     private View.OnClickListener onDeleteClickListener;
+    private ExamDao examDao;
 
-    public ExamAdapter(List<Exam> examList, View.OnClickListener onEditClickListener, View.OnClickListener onDeleteClickListener) {
+    public ExamAdapter(List<Exam> examList, ExamDao examDao, View.OnClickListener onEditClickListener, View.OnClickListener onDeleteClickListener) {
         this.examList = examList;
         this.onEditClickListener = onEditClickListener;
         this.onDeleteClickListener = onDeleteClickListener;
+        this.examDao = examDao;
     }
-
     public void setExams(List<Exam> examList) {
         this.examList = examList;
         notifyDataSetChanged();
@@ -50,11 +61,19 @@ public class ExamAdapter extends RecyclerView.Adapter<ExamAdapter.ExamViewHolder
 
         holder.deleteButton.setOnClickListener(v -> {
             int currentPosition = (int) v.getTag();
-            examList.remove(currentPosition);
-            notifyItemRemoved(currentPosition);
-            notifyItemRangeChanged(currentPosition, examList.size());
-        });
+            Exam examToDelete = examList.get(currentPosition);
 
+            Executors.newSingleThreadExecutor().execute(() -> {
+                examDao.deleteExam(examToDelete);
+
+                // Run on UI thread
+                new Handler(Looper.getMainLooper()).post(() -> {
+                    examList.remove(currentPosition);
+                    notifyItemRemoved(currentPosition);
+                    notifyItemRangeChanged(currentPosition, examList.size());
+                });
+            });
+        });
         holder.editButton.setOnClickListener(v -> {
             int currentPosition = (int) v.getTag();
             Bundle bundle = new Bundle();

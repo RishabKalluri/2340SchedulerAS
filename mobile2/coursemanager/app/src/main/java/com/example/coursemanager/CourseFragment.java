@@ -73,10 +73,14 @@ public class CourseFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 int position = (int) v.getTag();
+                Course courseToDelete = courseList.get(position);
+                courseDao.deleteCourse(courseToDelete);
+                courseList.remove(position);
+
             }
         };
 
-        courseAdapter = new CourseAdapter(new ArrayList<>(), onEditClickListener, onDeleteClickListener);
+        courseAdapter = new CourseAdapter(new ArrayList<>(), courseDao, onEditClickListener, onDeleteClickListener);
         recyclerView.setAdapter(courseAdapter);
         Button button = view.findViewById(R.id.nav_to_exam_button);
         button.setOnClickListener(new View.OnClickListener() {

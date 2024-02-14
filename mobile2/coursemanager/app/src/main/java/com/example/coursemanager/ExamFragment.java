@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 import com.example.coursemanager.services.AppDatabase;
+import com.example.coursemanager.services.Course;
 import com.example.coursemanager.services.Exam;
 import com.example.coursemanager.services.ExamDao;
 
@@ -38,7 +39,8 @@ public class ExamFragment extends Fragment {
         examDao = db.examDao();
 
         recyclerView = view.findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+
         View.OnClickListener onEditClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -53,11 +55,17 @@ public class ExamFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 int position = (int) v.getTag();
+                Exam examToDelete = examList.get(position);
+                examDao.deleteExam(examToDelete);
+                examList.remove(position);
+
             }
         };
-
-        examAdapter = new ExamAdapter(new ArrayList<>(), onEditClickListener, onDeleteClickListener);
+        examAdapter = new ExamAdapter(new ArrayList<>(), examDao, onEditClickListener, onDeleteClickListener);
         recyclerView.setAdapter(examAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+
 
         Button addButton = view.findViewById(R.id.add_button);
         addButton.setOnClickListener(new View.OnClickListener() {
