@@ -1,5 +1,7 @@
 package com.example.coursemanager;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,6 +41,7 @@ public class TaskFragment extends Fragment {
 
         recyclerView = view.findViewById(R.id.recyclerView);
 
+
         View.OnClickListener onEditClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,7 +72,13 @@ public class TaskFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL));
 
-
+        Button sortButton = view.findViewById(R.id.sort);
+        sortButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showSortDialog();
+            }
+        });
         Button addButton = view.findViewById(R.id.add_button);
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,7 +107,37 @@ public class TaskFragment extends Fragment {
 
         return view;
     }
+    private void showSortDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Sort");
 
+        // Add a list of items to the dialog
+        String[] sortOptions = getResources().getStringArray(R.array.sort_options);
+        builder.setItems(sortOptions, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String selectedOption = sortOptions[which];
+                sortTasks(selectedOption);
+            }
+        });
+
+        // Create and show the dialog
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+    private void sortTasks(String option) {
+        // Sort the tasks based on the selected option
+        if (option.equals("Due Date")) {
+            // Sort by due date
+        } else if (option.equals("Course Name")) {
+            // Sort by course name
+        } else if (option.equals("Task Name")) {
+            // Sort by task name
+        }
+
+        // Notify the adapter about the data change
+        taskAdapter.notifyDataSetChanged();
+    }
     private void loadTasks() {
         taskDao.getAllTasks().observe(getViewLifecycleOwner(), new Observer<List<Task>>() {
             @Override
