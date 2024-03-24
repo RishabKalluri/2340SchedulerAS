@@ -9,4 +9,5 @@ import com.example.coursemanager.services.CourseDao;
 public abstract class AppDatabase extends RoomDatabase {
     public abstract CourseDao courseDao();
     public abstract ExamDao examDao();
+    public abstract TaskDao taskDao();
 }
