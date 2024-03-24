@@ -14,9 +14,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
-import com.example.coursemanager.services.AppDatabase;
-import com.example.coursemanager.services.Task;
-import com.example.coursemanager.services.TaskDao;
+import com.example.coursemanager.services.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,8 +61,10 @@ public class TaskFragment extends Fragment {
                 taskAdapter.notifyDataSetChanged();
             }
         };
+        CourseDao courseDao = db.courseDao();
+        List<Course> courseList = courseDao.getAllCoursesSync();
 
-        taskAdapter = new TaskAdapter(new ArrayList<>(), taskDao, onEditClickListener, onDeleteClickListener);
+        taskAdapter = new TaskAdapter(taskList, courseList, taskDao, courseDao, onEditClickListener, onDeleteClickListener);
         recyclerView.setAdapter(taskAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 

@@ -6,10 +6,16 @@ import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.coursemanager.services.Course;
+import com.example.coursemanager.services.CourseDao;
 import com.example.coursemanager.services.Task;
 import com.example.coursemanager.services.TaskDao;
 
@@ -18,15 +24,19 @@ import java.util.concurrent.Executors;
 
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder> {
     private List<Task> taskList;
-    private static View.OnClickListener onEditClickListener;
-    private View.OnClickListener onDeleteClickListener;
+    private List<Course> courseList;
     private TaskDao taskDao;
+    private CourseDao courseDao;
+    private View.OnClickListener onEditClickListener;
+    private View.OnClickListener onDeleteClickListener;
 
-    public TaskAdapter(List<Task> taskList, TaskDao taskDao, View.OnClickListener onEditClickListener, View.OnClickListener onDeleteClickListener) {
+    public TaskAdapter(List<Task> taskList, List<Course> courseList, TaskDao taskDao, CourseDao courseDao, View.OnClickListener onEditClickListener, View.OnClickListener onDeleteClickListener) {
         this.taskList = taskList;
+        this.courseList = courseList;
+        this.taskDao = taskDao;
+        this.courseDao = courseDao;
         this.onEditClickListener = onEditClickListener;
         this.onDeleteClickListener = onDeleteClickListener;
-        this.taskDao = taskDao;
     }
 
     public void setTasks(List<Task> taskList) {
@@ -46,7 +56,15 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         Task task = taskList.get(position);
         holder.taskName.setText("Task: " + task.getTaskName());
         holder.dueDate.setText("Due Date: " + task.getDueDate());
-        holder.courseId.setText("Course ID: " + task.getCourseId());
+
+        ArrayAdapter<Course> adapter = new ArrayAdapter<>(holder.itemView.getContext(), android.R.layout.simple_spinner_item, courseList);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        holder.courseSpinner.setAdapter(adapter);
+
+        int coursePosition = getCoursePosition(task.getCourse());
+        if (coursePosition != -1) {
+            holder.courseSpinner.setSelection(coursePosition);
+        }
 
         holder.deleteButton.setTag(position);
         holder.editButton.setTag(position);
@@ -80,18 +98,27 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         return taskList.size();
     }
 
+    private int getCoursePosition(int courseId) {
+        for (int i = 0; i < courseList.size(); i++) {
+            if (courseList.get(i).getId() == courseId) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
     public static class TaskViewHolder extends RecyclerView.ViewHolder {
-        public TextView taskName, dueDate, courseId;
+        public TextView taskName, dueDate;
+        public Spinner courseSpinner;
         public Button deleteButton, editButton;
 
         public TaskViewHolder(View view) {
             super(view);
             taskName = view.findViewById(R.id.task_name);
             dueDate = view.findViewById(R.id.due_date);
-            courseId = view.findViewById(R.id.course_id);
+            courseSpinner = view.findViewById(R.id.course_spinner);
             deleteButton = view.findViewById(R.id.deleteButton);
             editButton = view.findViewById(R.id.editButton);
-            editButton.setOnClickListener(onEditClickListener);
         }
     }
 }

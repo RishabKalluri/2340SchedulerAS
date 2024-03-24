@@ -90,5 +90,40 @@
             android:id="@+id/editExamFragment"
             android:name="com.example.coursemanager.EditExamFragment"
             android:label="Edit Exam" />
+    <fragment
+            android:id="@+id/taskFragment"
+            android:name="com.example.coursemanager.TaskFragment"
+            android:label="TaskFragment"
+            tools:layout="@layout/fragment_task">
 
+        <action
+                android:id="@+id/action_taskFragment_to_addTaskFragment"
+                app:destination="@id/addTaskFragment" />
+
+        <action
+                android:id="@+id/action_taskFragment_to_courseFragment"
+                app:destination="@id/courseFragment" />
+
+        <action
+                android:id="@+id/action_taskFragment_to_editTaskFragment"
+                app:destination="@id/editTaskFragment" />
+    </fragment>
+
+    <fragment
+            android:id="@+id/addTaskFragment"
+            android:name="com.example.coursemanager.AddTaskFragment"
+            android:label="AddTaskFragment"
+            tools:layout="@layout/fragment_add_task" />
+
+    <fragment
+            android:id="@+id/courseFragment"
+            android:name="com.example.coursemanager.CourseFragment"
+            android:label="CourseFragment"
+            tools:layout="@layout/fragment_course" />
+
+    <fragment
+            android:id="@+id/editTaskFragment"
+            android:name="com.example.coursemanager.EditTaskFragment"
+            android:label="EditTaskFragment"
+            tools:layout="@layout/fragment_edit_task" />
 </navigation>

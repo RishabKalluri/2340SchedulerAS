@@ -14,6 +14,8 @@ import java.util.List;
 public interface CourseDao {
     @Query("SELECT * FROM Course")
     LiveData<List<Course>> getAllCourses();
+    List<Course> getAllCoursesSync();
+
 
     @Insert
     void insertCourse(Course course);
@@ -23,4 +25,6 @@ public interface CourseDao {
 
     @Delete
     void deleteCourse(Course course);
+    Course getCourseByName(String name);
+
 }
