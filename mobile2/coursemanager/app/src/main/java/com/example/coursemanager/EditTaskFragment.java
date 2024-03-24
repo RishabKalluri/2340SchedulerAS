@@ -43,7 +43,7 @@ public class EditTaskFragment extends Fragment {
             public void onClick(View v) {
                 taskToEdit.setTaskName(taskName.getText().toString());
                 taskToEdit.setDueDate(dueDate.getText().toString());
-                taskToEdit.setCourseId(Integer.parseInt(courseId.getText().toString()));
+                taskToEdit.setCourseId(courseId.getText().toString());
 
                 new Thread(new Runnable() {
                     @Override
