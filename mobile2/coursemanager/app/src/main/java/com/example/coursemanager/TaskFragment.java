@@ -58,12 +58,13 @@ public class TaskFragment extends Fragment {
                 Task taskToDelete = taskList.get(position);
                 taskDao.deleteTask(taskToDelete);
                 taskList.remove(position);
-                taskAdapter.notifyDataSetChanged();
+                taskAdapter.notifyDataSetChanged(); // Notify the adapter about the removed item
             }
         };
         CourseDao courseDao = db.courseDao();
 
-        taskAdapter = new TaskAdapter(taskList, taskDao, onEditClickListener, onDeleteClickListener);        recyclerView.setAdapter(taskAdapter);
+        taskAdapter = new TaskAdapter(taskList, taskDao, onEditClickListener, onDeleteClickListener);
+        recyclerView.setAdapter(taskAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         Button addButton = view.findViewById(R.id.add_button);

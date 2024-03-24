@@ -1,5 +1,7 @@
 package com.example.coursemanager;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +18,7 @@ import com.example.coursemanager.services.TaskDao;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executors;
 
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder> {
     private List<Task> taskList;
@@ -55,11 +58,17 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         holder.deleteButton.setOnClickListener(v -> {
             int currentPosition = (int) v.getTag();
             Task taskToDelete = taskList.get(currentPosition);
-            taskDao.deleteTask(taskToDelete);
-            taskList.remove(currentPosition);
-            notifyItemRemoved(currentPosition);
-        });
 
+            Executors.newSingleThreadExecutor().execute(() -> {
+                taskDao.deleteTask(taskToDelete);
+
+                // Run on UI thread
+                new Handler(Looper.getMainLooper()).post(() -> {
+                    taskList.remove(currentPosition);
+                    notifyItemRemoved(currentPosition);
+                });
+            });
+        });
         holder.editButton.setOnClickListener(v -> {
             int currentPosition = (int) v.getTag();
             Task taskToEdit = taskList.get(currentPosition);

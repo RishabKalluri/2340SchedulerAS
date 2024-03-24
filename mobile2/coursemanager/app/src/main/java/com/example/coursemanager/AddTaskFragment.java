@@ -39,22 +39,27 @@ public class AddTaskFragment extends Fragment {
         final EditText dueDate = view.findViewById(R.id.due_date);
         final EditText courseInput = view.findViewById(R.id.course_input);
 
-        final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+        dueDate.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                calendar.set(Calendar.YEAR, year);
-                calendar.set(Calendar.MONTH, monthOfYear);
-                calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                updateLabel(dueDate);
-            }
-        };
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    final Calendar c = Calendar.getInstance();
+                    int year = c.get(Calendar.YEAR);
+                    int month = c.get(Calendar.MONTH);
+                    int day = c.get(Calendar.DAY_OF_MONTH);
 
-        dueDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new DatePickerDialog(getActivity(), date, calendar
-                        .get(Calendar.YEAR), calendar.get(Calendar.MONTH),
-                        calendar.get(Calendar.DAY_OF_MONTH)).show();
+                    DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(),
+                            new DatePickerDialog.OnDateSetListener() {
+                                @Override
+                                public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                                    calendar.set(Calendar.YEAR, year);
+                                    calendar.set(Calendar.MONTH, month);
+                                    calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                                    updateLabel(dueDate);
+                                }
+                            }, year, month, day);
+                    datePickerDialog.show();
+                }
             }
         });
 
@@ -64,7 +69,7 @@ public class AddTaskFragment extends Fragment {
             public void onClick(View v) {
                 String name = taskName.getText().toString();
                 String date = dueDate.getText().toString();
-                String courseName = courseInput.getText().toString();
+                String courseName = courseInput.getText().toString().toUpperCase();
 
                 if (name.isEmpty()) {
                     taskName.setError("Task name is required");

@@ -36,65 +36,70 @@ public class AddCourseFragment extends Fragment {
         final EditText classSection = view.findViewById(R.id.class_section);
         final EditText location = view.findViewById(R.id.location);
 
-        time.setOnClickListener(new View.OnClickListener() {
+        time.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
-            public void onClick(View v) {
-                final Calendar c = Calendar.getInstance();
-                int hour = c.get(Calendar.HOUR_OF_DAY);
-                int minute = c.get(Calendar.MINUTE);
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    final Calendar c = Calendar.getInstance();
+                    int hour = c.get(Calendar.HOUR_OF_DAY);
+                    int minute = c.get(Calendar.MINUTE);
 
-                TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(),
-                        new TimePickerDialog.OnTimeSetListener() {
-                            @Override
-                            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                                time.setText(String.format("%02d:%02d", hourOfDay, minute));
-                            }
-                        }, hour, minute, true);
-                timePickerDialog.show();
+                    TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(),
+                            new TimePickerDialog.OnTimeSetListener() {
+                                @Override
+                                public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                                    time.setText(String.format("%02d:%02d", hourOfDay, minute));
+                                }
+                            }, hour, minute, true);
+                    timePickerDialog.show();
+                }
             }
         });
-
         final String[] days = new String[]{"Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"};
         final boolean[] checkedDays = new boolean[7];
 
-        daysOfWeek.setOnClickListener(new View.OnClickListener() {
+        daysOfWeek.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
-            public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setTitle("Select days of the week")
-                        .setMultiChoiceItems(days, checkedDays, new DialogInterface.OnMultiChoiceClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-                                checkedDays[which] = isChecked;
-                            }
-                        })
-                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int id) {
-                                StringBuilder selectedDays = new StringBuilder();
-                                for (int i = 0; i < checkedDays.length; i++) {
-                                    if (checkedDays[i]) {
-                                        selectedDays.append(days[i]).append(" ");
-                                    }
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    final String[] days = new String[]{"Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"};
+                    final boolean[] checkedDays = new boolean[7];
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    builder.setTitle("Select days of the week")
+                            .setMultiChoiceItems(days, checkedDays, new DialogInterface.OnMultiChoiceClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                                    checkedDays[which] = isChecked;
                                 }
-                                daysOfWeek.setText(selectedDays.toString().trim());
-                            }
-                        })
-                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.dismiss();
-                            }
-                        });
-                builder.create().show();
+                            })
+                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int id) {
+                                    StringBuilder selectedDays = new StringBuilder();
+                                    for (int i = 0; i < checkedDays.length; i++) {
+                                        if (checkedDays[i]) {
+                                            selectedDays.append(days[i]).append(" ");
+                                        }
+                                    }
+                                    daysOfWeek.setText(selectedDays.toString().trim());
+                                }
+                            })
+                            .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.dismiss();
+                                }
+                            });
+                    builder.create().show();
+                }
             }
         });
-
         Button addButton = view.findViewById(R.id.add_button);
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String name = courseName.getText().toString();
+                String name = courseName.getText().toString().toUpperCase();
                 String timeText = time.getText().toString();
                 String instructorText = instructor.getText().toString();
                 String daysOfWeekText = daysOfWeek.getText().toString();
