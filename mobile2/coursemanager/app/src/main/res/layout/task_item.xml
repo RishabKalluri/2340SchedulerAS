@@ -35,15 +35,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/course_name"
             app:layout_constraintEnd_toStartOf="@+id/deleteButton" />
-
-    <Spinner
-            android:id="@+id/course_spinner"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/due_date"
-            app:layout_constraintEnd_toStartOf="@+id/deleteButton" />
-
     <Button
             android:id="@+id/deleteButton"
             android:layout_width="wrap_content"

@@ -62,10 +62,8 @@ public class TaskFragment extends Fragment {
             }
         };
         CourseDao courseDao = db.courseDao();
-        List<Course> courseList = courseDao.getAllCoursesSync();
 
-        taskAdapter = new TaskAdapter(taskList, courseList, taskDao, courseDao, onEditClickListener, onDeleteClickListener);
-        recyclerView.setAdapter(taskAdapter);
+        taskAdapter = new TaskAdapter(taskList, taskDao, onEditClickListener, onDeleteClickListener);        recyclerView.setAdapter(taskAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         Button addButton = view.findViewById(R.id.add_button);
@@ -76,13 +74,21 @@ public class TaskFragment extends Fragment {
             }
         });
 
-        Button button = view.findViewById(R.id.task_to_course_button);
+        Button button = view.findViewById(R.id.nav_to_course_button);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Navigation.findNavController(v).navigate(R.id.action_taskFragment_to_courseFragment);
             }
         });
+        Button examButton = view.findViewById(R.id.task_to_exam_button);
+        examButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(v).navigate(R.id.action_taskFragment_to_examFragment);
+            }
+        });
+
 
         loadTasks();
 

@@ -15,6 +15,9 @@
         <action
                 android:id="@+id/action_courseFragment_to_examFragment"
                 app:destination="@id/examFragment" />
+        <action
+                android:id="@+id/action_courseFragment_to_todoFragment"
+                app:destination="@id/taskFragment" />
 
     </fragment>
 
@@ -38,9 +41,7 @@
         <action
                 android:id="@+id/action_courseFragment_to_examFragment"
                 app:destination="@id/examFragment" />
-        <action
-                android:id="@+id/action_courseFragment_to_todoFragment"
-                app:destination="@id/taskFragment" />
+
     </fragment>
     <fragment
             android:id="@+id/addExamFragment"
@@ -67,6 +68,10 @@
         <action
                 android:id="@+id/action_examFragment_to_addExamFragment"
                 app:destination="@id/addExamFragment"/>
+        <action
+                android:id="@+id/action_examFragment_to_todoFragment"
+                app:destination="@id/taskFragment" />
+
 
     </fragment>
 
@@ -77,7 +82,7 @@
     <fragment
             android:id="@+id/taskFragment"
             android:name="com.example.coursemanager.TaskFragment"
-            android:label="TaskFragment"
+            android:label="ToDo List"
             tools:layout="@layout/fragment_task">
 
         <action
@@ -91,18 +96,21 @@
         <action
                 android:id="@+id/action_taskFragment_to_editTaskFragment"
                 app:destination="@id/editTaskFragment" />
+        <action
+                android:id="@+id/action_taskFragment_to_examFragment"
+                app:destination="@id/examFragment" />
     </fragment>
 
     <fragment
             android:id="@+id/addTaskFragment"
             android:name="com.example.coursemanager.AddTaskFragment"
-            android:label="AddTaskFragment"
+            android:label="Tasks"
             tools:layout="@layout/fragment_add_task" />
 
     <fragment
             android:id="@+id/courseFragment"
             android:name="com.example.coursemanager.CourseFragment"
-            android:label="CourseFragment"
+            android:label="Courses"
             tools:layout="@layout/fragment_course" />
 
     <fragment

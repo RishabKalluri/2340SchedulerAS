@@ -8,10 +8,7 @@ import java.io.Serializable;
 
 import static androidx.room.ForeignKey.CASCADE;
 
-@Entity(foreignKeys = @ForeignKey(entity = Course.class,
-        parentColumns = "id",
-        childColumns = "courseId",
-        onDelete = CASCADE))
+@Entity
 public class Task implements Serializable {
     @PrimaryKey(autoGenerate = true)
     private int id;

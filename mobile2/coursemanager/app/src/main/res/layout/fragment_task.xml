@@ -28,8 +28,8 @@
             android:layout_marginBottom="16dp"
             app:layout_constraintHorizontal_bias="0.0"/>
     <Button
-            android:id="@+id/task_to_course_button"
-            android:text="ToDo"
+            android:id="@+id/task_to_exam_button"
+            android:text="Exams"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/ic_plus"

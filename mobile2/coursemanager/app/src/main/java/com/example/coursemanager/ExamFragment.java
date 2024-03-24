@@ -72,6 +72,13 @@ public class ExamFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
 
+        Button todoButton2 = view.findViewById(R.id.todo_button_2);
+        todoButton2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(v).navigate(R.id.action_examFragment_to_todoFragment);
+            }
+        });
 
         Button addButton = view.findViewById(R.id.add_button);
         addButton.setOnClickListener(new View.OnClickListener() {
