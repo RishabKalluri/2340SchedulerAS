@@ -8,7 +8,7 @@
     <fragment
             android:id="@+id/fragment_course"
             android:name="com.example.coursemanager.CourseFragment"
-            android:label="CourseFragment" >
+            android:label="Courses" >
         <action
                 android:id="@+id/action_courseFragment_to_editCourseFragment"
                 app:destination="@id/editCourseFragment" />
@@ -40,14 +40,8 @@
                 app:destination="@id/examFragment" />
         <action
                 android:id="@+id/action_courseFragment_to_todoFragment"
-                app:destination="@id/todoFragment" />
+                app:destination="@id/taskFragment" />
     </fragment>
-    <fragment
-            android:id="@+id/todoFragment"
-            android:name="com.example.coursemanager.TodoFragment"
-            android:label="Todo Fragment"
-            tools:layout="@layout/todo_activity_main" />
-
     <fragment
             android:id="@+id/addExamFragment"
             android:name="com.example.coursemanager.AddExamFragment"
@@ -60,16 +54,6 @@
             android:label="@string/add_course_fragment"
             tools:layout="@layout/fragment_add_course" />
 
-    <fragment
-            android:id="@+id/SecondFragment"
-            android:name="com.example.coursemanager.SecondFragment"
-            android:label="@string/second_fragment_label"
-            tools:layout="@layout/fragment_second">
-
-        <action
-                android:id="@+id/action_SecondFragment_to_FirstFragment"
-                app:destination="@id/fragment_course"/>
-    </fragment>
     <fragment
             android:id="@+id/examFragment"
             android:name="com.example.coursemanager.ExamFragment"

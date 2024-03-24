@@ -61,7 +61,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         holder.courseSpinner.setAdapter(adapter);
 
-        int coursePosition = getCoursePosition(task.getCourse());
+        int coursePosition = getCoursePosition(task.getCourseId());
         if (coursePosition != -1) {
             holder.courseSpinner.setSelection(coursePosition);
         }

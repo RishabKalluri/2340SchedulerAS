@@ -28,7 +28,7 @@
             android:layout_marginBottom="16dp"
             app:layout_constraintHorizontal_bias="0.0"/>
     <Button
-            android:id="@+id/todo_button"
+            android:id="@+id/task_to_course_button"
             android:text="ToDo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

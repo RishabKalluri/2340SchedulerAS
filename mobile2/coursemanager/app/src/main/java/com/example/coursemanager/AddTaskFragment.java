@@ -94,7 +94,7 @@ public class AddTaskFragment extends Fragment {
                 Task task = new Task();
                 task.setTaskName(name);
                 task.setDueDate(date);
-                task.setCourse(courseDao.getCourseByName(courseName).getId());
+                task.setCourseId(courseDao.getCourseByName(courseName).getId());
 
                 taskDao.insertTask(task);
             }

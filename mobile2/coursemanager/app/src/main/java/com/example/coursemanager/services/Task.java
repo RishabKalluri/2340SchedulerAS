@@ -5,7 +5,6 @@ import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
-import java.util.Date;
 
 import static androidx.room.ForeignKey.CASCADE;
 
@@ -19,20 +18,16 @@ public class Task implements Serializable {
 
     private String taskName;
     private String dueDate;
-    private int course;
-    private boolean isComplete;
+    private int courseId;
+    private boolean isComplete = false;
 
-    public Task(String taskName, String dueDate, int courseId) {
-        this.taskName = taskName;
-        this.dueDate = dueDate;
-        this.course = courseId;
-        this.isComplete = false;
+    public int getId() {
+        return id;
     }
 
-    public Task() {
-
+    public void setId(int id) {
+        this.id = id;
     }
-
     public String getTaskName() {
         return taskName;
     }
@@ -49,12 +44,12 @@ public class Task implements Serializable {
         this.dueDate = dueDate;
     }
 
-    public int getCourse() {
-        return course;
+    public int getCourseId() {
+        return courseId;
     }
 
-    public void setCourse(int courseId) {
-        this.course = courseId;
+    public void setCourseId(int courseId) {
+        this.courseId = courseId;
     }
 
     public boolean isComplete() {
