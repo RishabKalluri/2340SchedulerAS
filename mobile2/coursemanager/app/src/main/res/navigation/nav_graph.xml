@@ -41,6 +41,9 @@
         <action
                 android:id="@+id/action_courseFragment_to_examFragment"
                 app:destination="@id/examFragment" />
+        <action
+                android:id="@+id/action_courseFragment_to_todoFragment"
+                app:destination="@id/taskFragment" />
 
     </fragment>
     <fragment
