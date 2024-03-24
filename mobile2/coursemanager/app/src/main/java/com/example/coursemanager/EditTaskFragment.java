@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
 import androidx.fragment.app.Fragment;
 import androidx.room.Room;
 import com.example.coursemanager.services.AppDatabase;
@@ -49,8 +51,13 @@ public class EditTaskFragment extends Fragment {
                         taskDao.updateTask(taskToEdit);
                     }
                 }).start();
+
+
+                Toast.makeText(v.getContext(), "Task Edited!", Toast.LENGTH_SHORT).show();
             }
         });
+
+
 
         return view;
     }

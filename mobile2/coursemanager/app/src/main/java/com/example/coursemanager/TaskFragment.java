@@ -106,14 +106,6 @@ public class TaskFragment extends Fragment {
             }
         });
 
-        Button sortButton = view.findViewById(sort_button); // add this button in your layout and replace the gibberish
-        sortButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                toggleSortByName();
-            }
-        });
-
 
         loadTasks();
 
