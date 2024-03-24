@@ -1,23 +1,25 @@
 package com.example.coursemanager;
 
+import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
-
+import android.widget.TimePicker;
 import androidx.fragment.app.Fragment;
 import androidx.room.Room;
 import com.example.coursemanager.services.AppDatabase;
 import com.example.coursemanager.services.Course;
 import com.example.coursemanager.services.CourseDao;
+import java.util.Calendar;
 
 public class EditCourseFragment extends Fragment {
     private AppDatabase db;
     private CourseDao courseDao;
     private Course courseToEdit;
+    final Calendar calendar = Calendar.getInstance();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -43,6 +45,25 @@ public class EditCourseFragment extends Fragment {
         classSection.setText(courseToEdit.getClassSection());
         location.setText(courseToEdit.getLocation());
 
+        time.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    int hour = calendar.get(Calendar.HOUR_OF_DAY);
+                    int minute = calendar.get(Calendar.MINUTE);
+
+                    TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(),
+                            new TimePickerDialog.OnTimeSetListener() {
+                                @Override
+                                public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                                    time.setText(String.format("%02d:%02d", hourOfDay, minute));
+                                }
+                            }, hour, minute, true);
+                    timePickerDialog.show();
+                }
+            }
+        });
+
         Button editButton = view.findViewById(R.id.edit_button);
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,8 +81,6 @@ public class EditCourseFragment extends Fragment {
                         courseDao.updateCourse(courseToEdit);
                     }
                 }).start();
-
-                Toast.makeText(v.getContext(), "Course Edited!", Toast.LENGTH_SHORT).show();
             }
         });
 
