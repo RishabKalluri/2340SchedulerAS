@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TimePicker;
+import android.widget.Toast;
+
 import androidx.fragment.app.Fragment;
 import androidx.room.Room;
 import com.example.coursemanager.services.AppDatabase;
@@ -140,6 +142,8 @@ public class AddCourseFragment extends Fragment {
                 course.setLocation(locationText);
 
                 courseDao.insertCourse(course);
+
+                Toast.makeText(v.getContext(), "Course Added!", Toast.LENGTH_SHORT).show();
             }
         });
 

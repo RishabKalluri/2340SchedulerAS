@@ -19,6 +19,7 @@ import com.example.coursemanager.services.TaskDao;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
+import android.widget.Toast;
 
 public class AddTaskFragment extends Fragment {
     private AppDatabase db;
@@ -93,6 +94,8 @@ public class AddTaskFragment extends Fragment {
                 }
 
                 taskDao.insertTask(task);
+
+                Toast.makeText(v.getContext(), "Task Added!", Toast.LENGTH_SHORT).show();
             }
         });
 

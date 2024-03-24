@@ -18,6 +18,8 @@ import androidx.room.Room;
 import com.example.coursemanager.services.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class TaskFragment extends Fragment {
@@ -26,6 +28,8 @@ public class TaskFragment extends Fragment {
     private List<Task> taskList;
     private RecyclerView recyclerView;
     private TaskAdapter taskAdapter;
+
+    private boolean isSortByNameEnabled = false;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -93,6 +97,14 @@ public class TaskFragment extends Fragment {
             }
         });
 
+        Button sortButton = view.findViewById(fjdkafdhjkfhdjkfhdajkfa); // add this button in your layout and replace the gibberish
+        sortButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toggleSortByName();
+            }
+        });
+
 
         loadTasks();
 
@@ -108,5 +120,24 @@ public class TaskFragment extends Fragment {
                 taskAdapter.notifyDataSetChanged();
             }
         });
+    }
+
+    private void sortByName() {
+        if (taskList != null) {
+            if (isSortByNameEnabled) {
+                Collections.sort(taskList, new Comparator<Task>() {
+                    @Override
+                    public int compare(Task task1, Task task2) {
+                        return task1.getTaskName().compareToIgnoreCase(task2.getTaskName());
+                    }
+                });
+            }
+            taskAdapter.notifyDataSetChanged();
+        }
+    }
+
+    private void toggleSortByName() {
+        isSortByNameEnabled = !isSortByNameEnabled;
+        sortByName();
     }
 }
