@@ -15,7 +15,7 @@ public class Task implements Serializable {
 
     private String taskName;
     private String dueDate;
-    private int courseId;
+    private String courseId;
     private boolean isComplete = false;
 
     public int getId() {
@@ -41,11 +41,11 @@ public class Task implements Serializable {
         this.dueDate = dueDate;
     }
 
-    public int getCourseId() {
+    public String getCourseId() {
         return courseId;
     }
 
-    public void setCourseId(int courseId) {
+    public void setCourseId(String courseId) {
         this.courseId = courseId;
     }
 

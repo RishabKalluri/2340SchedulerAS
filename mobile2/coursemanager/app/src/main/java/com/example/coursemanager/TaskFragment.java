@@ -20,6 +20,8 @@ import androidx.room.Room;
 import com.example.coursemanager.services.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class TaskFragment extends Fragment {
@@ -126,25 +128,49 @@ public class TaskFragment extends Fragment {
         dialog.show();
     }
     private void sortTasks(String option) {
-        // Sort the tasks based on the selected option
-        if (option.equals("Due Date")) {
-            // Sort by due date
-        } else if (option.equals("Course Name")) {
-            // Sort by course name
-        } else if (option.equals("Task Name")) {
-            // Sort by task name
-        }
+        CourseDao courseDao = db.courseDao();
+        taskDao.getAllTasks().observe(getViewLifecycleOwner(), new Observer<List<Task>>() {
+            @Override
+            public void onChanged(List<Task> tasks) {
+                if (option.equals("Due Date")) {
+                    // Sort by due date
+                    Collections.sort(tasks, new Comparator<Task>() {
+                        @Override
+                        public int compare(Task task1, Task task2) {
+                            return task1.getDueDate().compareTo(task2.getDueDate());
+                        }
+                    });
+                } else if (option.equals("Course Name")) {
+                    Collections.sort(tasks, new Comparator<Task>() {
+                        @Override
+                        public int compare(Task task1, Task task2) {
+                            return task1.getCourseId().compareTo(task2.getCourseId());
+                        }
 
-        // Notify the adapter about the data change
-        taskAdapter.notifyDataSetChanged();
+                    });
+                } else if (option.equals("Completion Status")) {
+                    // Sort by completion status
+                    Collections.sort(tasks, new Comparator<Task>() {
+                        @Override
+                        public int compare(Task task1, Task task2) {
+                            return Boolean.compare(task1.isComplete(), task2.isComplete());
+                        }
+                    });
+                }
+
+                taskList = tasks;
+                taskAdapter.setTasks(taskList);
+                taskAdapter.notifyDataSetChanged();
+            }
+        });
     }
     private void loadTasks() {
         taskDao.getAllTasks().observe(getViewLifecycleOwner(), new Observer<List<Task>>() {
             @Override
             public void onChanged(List<Task> tasks) {
-                taskList = tasks;
-                taskAdapter.setTasks(taskList);
-                taskAdapter.notifyDataSetChanged();
+                    taskList = tasks;
+                    taskAdapter.setTasks(taskList);
+                    taskAdapter.notifyDataSetChanged();
             }
         });
     }

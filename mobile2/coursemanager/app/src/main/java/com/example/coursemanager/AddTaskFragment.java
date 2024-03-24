@@ -86,10 +86,8 @@ public class AddTaskFragment extends Fragment {
 
                 if (!courseName.isEmpty()) {
 
-                    Course course = courseDao.getCourseByName(courseName);
-                    if (course != null) {
-                        task.setCourseId(course.getId());
-                    }
+                        task.setCourseId(courseName);
+
                 }
 
                 taskDao.insertTask(task);

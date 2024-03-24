@@ -19,8 +19,12 @@ public interface CourseDao {
     @Query("SELECT * FROM Course WHERE courseName = :name LIMIT 1")
     Course getCourseByName(String name);
 
+    @Query("SELECT courseName FROM Course WHERE id = :id LIMIT 1")
+    String getCourseNameById(int id);
+
     @Insert
     void insertCourse(Course course);
+
 
     @Update
     void updateCourse(Course course);
