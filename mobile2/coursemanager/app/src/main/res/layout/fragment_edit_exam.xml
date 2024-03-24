@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:padding="16dp">
+
+    <EditText
+            android:id="@+id/exam_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Exam Name" />
+
+    <EditText
+            android:id="@+id/course_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Course Name" />
+
+    <EditText
+            android:id="@+id/time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Time" />
+
+    <EditText
+            android:id="@+id/date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Date" />
+
+    <EditText
+            android:id="@+id/location"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Location" />
+
+    <Button
+            android:id="@+id/edit_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Edit Exam" />
+
+</LinearLayout>
