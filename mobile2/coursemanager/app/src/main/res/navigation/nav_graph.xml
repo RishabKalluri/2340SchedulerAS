@@ -84,6 +84,9 @@
             android:name="com.example.coursemanager.TaskFragment"
             android:label="ToDo List"
             tools:layout="@layout/fragment_task">
+        <action
+                android:id="@+id/action_taskFragment_to_editTaskFragment"
+                app:destination="@id/editTaskFragment" />
 
         <action
                 android:id="@+id/action_taskFragment_to_addTaskFragment"
