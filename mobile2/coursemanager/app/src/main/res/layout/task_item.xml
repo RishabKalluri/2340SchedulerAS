@@ -10,11 +10,18 @@
             android:id="@+id/task_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:text="Task Name: "
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/deleteButton" />
+    <CheckBox
+            android:id="@+id/task_completed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Completion Status"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/due_date" />
 
     <TextView
             android:id="@+id/course_name"
@@ -35,6 +42,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/course_name"
             app:layout_constraintEnd_toStartOf="@+id/deleteButton" />
+
     <Button
             android:id="@+id/deleteButton"
             android:layout_width="wrap_content"
@@ -42,9 +50,7 @@
             android:text="Delete"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="16dp"
             android:layout_marginEnd="4dp"/>
-
     <Button
             android:id="@+id/editButton"
             android:layout_width="wrap_content"
@@ -53,5 +59,5 @@
             app:layout_constraintTop_toBottomOf="@id/deleteButton"
             android:layout_marginTop="8dp"
             app:layout_constraintStart_toStartOf="@id/deleteButton"
-            app:layout_constraintEnd_toEndOf="@id/deleteButton"/>
+            app:layout_constraintEnd_toEndOf="@id/deleteButton" app:layout_constraintHorizontal_bias="0.0"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

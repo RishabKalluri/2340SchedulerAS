@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -54,10 +55,13 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         holder.deleteButton.setTag(position);
         holder.editButton.setTag(position);
         holder.editButton.setOnClickListener(onEditClickListener);
+        holder.taskCompleted.setChecked(task.isComplete());
+
 
         holder.deleteButton.setOnClickListener(v -> {
             int currentPosition = (int) v.getTag();
             Task taskToDelete = taskList.get(currentPosition);
+
 
             Executors.newSingleThreadExecutor().execute(() -> {
                 taskDao.deleteTask(taskToDelete);
@@ -68,12 +72,27 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
                     notifyItemRemoved(currentPosition);
                 });
             });
+            holder.taskCompleted.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                // Update the isComplete status of the Task object
+                task.setComplete(isChecked);
+
+                // Update the task in the database on a background thread
+                Executors.newSingleThreadExecutor().execute(() -> {
+                    taskDao.updateTask(task);
+                });
+            });
+
         });
-        holder.editButton.setOnClickListener(v -> {
-            int currentPosition = (int) v.getTag();
-            Task taskToEdit = taskList.get(currentPosition);
-            onEditClickListener.onClick(v);
+        holder.taskCompleted.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            // Update the isComplete status of the Task object
+            task.setComplete(isChecked);
+
+            // Update the task in the database on a background thread
+            Executors.newSingleThreadExecutor().execute(() -> {
+                taskDao.updateTask(task);
+            });
         });
+
     }
 
     @Override
@@ -83,6 +102,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
 
     public static class TaskViewHolder extends RecyclerView.ViewHolder {
         public TextView taskName, dueDate;
+        public CheckBox taskCompleted;
         public Button deleteButton, editButton;
 
         public TaskViewHolder(View view) {
@@ -90,6 +110,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
             taskName = view.findViewById(R.id.task_name);
             dueDate = view.findViewById(R.id.due_date);
             deleteButton = view.findViewById(R.id.deleteButton);
+            taskCompleted = view.findViewById(R.id.task_completed);
             editButton = view.findViewById(R.id.editButton);
         }
     }
