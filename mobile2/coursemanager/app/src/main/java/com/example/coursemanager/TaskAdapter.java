@@ -51,6 +51,8 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         Task task = taskList.get(position);
         holder.taskName.setText("Task: " + task.getTaskName());
         holder.dueDate.setText("Due Date: " + task.getDueDate());
+        holder.courseName.setText("Course Name: " + task.getCourseId());
+
 
         holder.deleteButton.setTag(position);
         holder.editButton.setTag(position);
