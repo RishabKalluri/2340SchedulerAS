@@ -36,24 +36,4 @@
         libero vel nunc consequat, quis tincidunt nisl eleifend. Cras bibendum enim a justo luctus vestibulum. Fusce
         dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
-
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
-
-    <string name="nav_header_desc">Navigation header</string>
-    <string name="nav_header_subtitle">psaokar@gatech.edu</string>
-    <string name="nav_header_title">Prajwal Saokar</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-
-    <string name="menu_home">Home</string>
-    <string name="menu_gallery">Gallery</string>
-    <string name="menu_slideshow">Slideshow</string>
-    <string name="login">Login</string>
-    <string name="email">Email</string>
-    <string name="password">Password</string>
-    <string name="register">Register</string>
-    <string name="click_to_login">Click to Login</string>
-    <string name="click_to_register">Click to Register</string>
 </resources>
