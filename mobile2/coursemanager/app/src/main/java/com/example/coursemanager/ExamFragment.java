@@ -1,5 +1,6 @@
 package com.example.coursemanager;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -84,6 +85,8 @@ public class ExamFragment extends Fragment {
         });
 
         loadExams();
+
+
 
         return view;
     }

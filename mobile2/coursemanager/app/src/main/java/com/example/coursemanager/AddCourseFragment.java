@@ -1,16 +1,21 @@
 package com.example.coursemanager;
 
+import android.app.AlertDialog;
+import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TimePicker;
 import androidx.fragment.app.Fragment;
 import androidx.room.Room;
 import com.example.coursemanager.services.AppDatabase;
 import com.example.coursemanager.services.Course;
 import com.example.coursemanager.services.CourseDao;
+import java.util.Calendar;
 
 public class AddCourseFragment extends Fragment {
     private AppDatabase db;
@@ -31,6 +36,60 @@ public class AddCourseFragment extends Fragment {
         final EditText classSection = view.findViewById(R.id.class_section);
         final EditText location = view.findViewById(R.id.location);
 
+        time.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Calendar c = Calendar.getInstance();
+                int hour = c.get(Calendar.HOUR_OF_DAY);
+                int minute = c.get(Calendar.MINUTE);
+
+                TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(),
+                        new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                                time.setText(String.format("%02d:%02d", hourOfDay, minute));
+                            }
+                        }, hour, minute, true);
+                timePickerDialog.show();
+            }
+        });
+
+        final String[] days = new String[]{"Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"};
+        final boolean[] checkedDays = new boolean[7];
+
+        daysOfWeek.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle("Select days of the week")
+                        .setMultiChoiceItems(days, checkedDays, new DialogInterface.OnMultiChoiceClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                                checkedDays[which] = isChecked;
+                            }
+                        })
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int id) {
+                                StringBuilder selectedDays = new StringBuilder();
+                                for (int i = 0; i < checkedDays.length; i++) {
+                                    if (checkedDays[i]) {
+                                        selectedDays.append(days[i]).append(" ");
+                                    }
+                                }
+                                daysOfWeek.setText(selectedDays.toString().trim());
+                            }
+                        })
+                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.dismiss();
+                            }
+                        });
+                builder.create().show();
+            }
+        });
+
         Button addButton = view.findViewById(R.id.add_button);
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -41,6 +100,31 @@ public class AddCourseFragment extends Fragment {
                 String daysOfWeekText = daysOfWeek.getText().toString();
                 String classSectionText = classSection.getText().toString();
                 String locationText = location.getText().toString();
+
+                if (name.isEmpty()) {
+                    courseName.setError("Course name is required");
+                    return;
+                }
+                if (timeText.isEmpty()) {
+                    time.setError("Time is required");
+                    return;
+                }
+                if (instructorText.isEmpty()) {
+                    instructor.setError("Instructor is required");
+                    return;
+                }
+                if (daysOfWeekText.isEmpty()) {
+                    daysOfWeek.setError("Days of week is required");
+                    return;
+                }
+                if (classSectionText.isEmpty()) {
+                    classSection.setError("Class section is required");
+                    return;
+                }
+                if (locationText.isEmpty()) {
+                    location.setError("Location is required");
+                    return;
+                }
 
                 Course course = new Course();
                 course.setCourseName(name);

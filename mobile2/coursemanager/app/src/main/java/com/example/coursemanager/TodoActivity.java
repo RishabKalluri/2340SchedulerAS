@@ -1,4 +1,4 @@
-package com.example.simpletodo;
+package com.example.coursemanager;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -19,9 +19,9 @@ import android.widget.ListView;
 import android.widget.Switch;
 
 import com.example.coursemanager.MainActivity;
-import com.example.simpletodo.R;
+import com.example.coursemanager.R;
 import com.example.simpletodo.TaskItem;
-import com.example.simpletodo.TaskItemAdapter;
+import com.example.coursemanager.TaskItemAdapter;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -51,11 +51,11 @@ public class TodoActivity extends Activity {
 
         Button addDateTimeButton = findViewById(R.id.btnAddDateTime);
         addDateTimeButton.setOnClickListener(view -> {
-            new DatePickerDialog(MainActivity.this, (datePicker, year, month, day) -> {
+            new DatePickerDialog(TodoActivity.this, (datePicker, year, month, day) -> {
                 calendar.set(Calendar.YEAR, year);
                 calendar.set(Calendar.MONTH, month);
                 calendar.set(Calendar.DAY_OF_MONTH, day);
-                new TimePickerDialog(MainActivity.this, (timePicker, hourOfDay, minute) -> {
+                new TimePickerDialog(TodoActivity.this, (timePicker, hourOfDay, minute) -> {
                     calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
                     calendar.set(Calendar.MINUTE, minute);
                 }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), true).show();

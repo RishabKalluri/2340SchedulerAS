@@ -70,7 +70,6 @@ public class ExamAdapter extends RecyclerView.Adapter<ExamAdapter.ExamViewHolder
                 new Handler(Looper.getMainLooper()).post(() -> {
                     examList.remove(currentPosition);
                     notifyItemRemoved(currentPosition);
-                    notifyItemRangeChanged(currentPosition, examList.size());
                 });
             });
         });

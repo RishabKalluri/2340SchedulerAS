@@ -17,7 +17,16 @@
         <action
                 android:id="@+id/action_courseFragment_to_examFragment"
                 app:destination="@id/examFragment" />
+        <action
+                android:id="@+id/action_courseFragment_to_todoFragment"
+                app:destination="@id/todoFragment" />
     </fragment>
+    <fragment
+            android:id="@+id/todoFragment"
+            android:name="com.example.coursemanager.TodoFragment"
+            android:label="Todo Fragment"
+            tools:layout="@layout/todo_activity_main" />
+
     <fragment
             android:id="@+id/addExamFragment"
             android:name="com.example.coursemanager.AddExamFragment"
@@ -50,6 +59,7 @@
         <action
                 android:id="@+id/action_examFragment_to_addExamFragment"
                 app:destination="@id/addExamFragment"/>
+
     </fragment>
 
 </navigation>

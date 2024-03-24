@@ -91,6 +91,14 @@ public class CourseFragment extends Fragment {
         });
         loadCourses();
 
+        Button todobutton = view.findViewById(R.id.todo_button);
+        todobutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(v).navigate(R.id.action_courseFragment_to_todoFragment);
+            }
+        });
+
         return view;
     }
 

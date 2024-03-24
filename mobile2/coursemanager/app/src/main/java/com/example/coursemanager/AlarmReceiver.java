@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import androidx.core.app.NotificationCompat;
+import com.example.coursemanager.R;
 
 public class AlarmReceiver extends BroadcastReceiver {
     @Override
