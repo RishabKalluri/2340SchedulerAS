@@ -1,16 +1,18 @@
 package com.example.coursemanager;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.coursemanager.services.Course;
 import com.example.coursemanager.services.CourseDao;
+
 import java.util.List;
-import android.os.Bundle;
 import java.util.concurrent.Executors;
 import android.os.Handler;
 import android.os.Looper;
@@ -18,15 +20,14 @@ import android.os.Looper;
 public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseViewHolder> {
     private List<Course> courseList;
     private CourseDao courseDao;
-
-    private static View.OnClickListener onEditClickListener;
-    private View.OnClickListener onDeleteClickListener;
+    private final View.OnClickListener onEditClickListener;
+    private final View.OnClickListener onDeleteClickListener;
 
     public CourseAdapter(List<Course> courseList, CourseDao courseDao, View.OnClickListener onEditClickListener, View.OnClickListener onDeleteClickListener) {
         this.courseList = courseList;
+        this.courseDao = courseDao;
         this.onEditClickListener = onEditClickListener;
         this.onDeleteClickListener = onDeleteClickListener;
-        this.courseDao = courseDao;
     }
 
     public void setCourses(List<Course> courseList) {
@@ -37,8 +38,8 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
     @NonNull
     @Override
     public CourseViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.course_item, parent, false);
-        return new CourseViewHolder(itemView);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.course_item, parent, false);
+        return new CourseViewHolder(view, onEditClickListener, onDeleteClickListener);
     }
 
     @Override
@@ -73,12 +74,8 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
 
         holder.editButton.setOnClickListener(v -> {
             int currentPosition = (int) v.getTag();
-            Bundle bundle = new Bundle();
             Course courseToEdit = courseList.get(currentPosition);
-            // Assuming Course has getters for its fields, those can be used here.
-            bundle.putInt("position", currentPosition); // Example of passing position, adjust based on actual navigation needs
-            // Navigate with bundle or use bundle in your click listener to perform navigation
-            onEditClickListener.onClick(v); // Assuming navigation or any .se is handled outside through passed listener
+            onEditClickListener.onClick(v);
         });
     }
 
@@ -91,7 +88,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
         public TextView courseName, time, instructor, daysOfWeek, classSection, location;
         public Button deleteButton, editButton;
 
-        public CourseViewHolder(View view) {
+        public CourseViewHolder(View view, View.OnClickListener onEditClickListener, View.OnClickListener onDeleteClickListener) {
             super(view);
             courseName = view.findViewById(R.id.courseName);
             time = view.findViewById(R.id.time);
@@ -102,7 +99,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
             deleteButton = view.findViewById(R.id.deleteButton);
             editButton = view.findViewById(R.id.editButton);
             editButton.setOnClickListener(onEditClickListener);
-
+            deleteButton.setOnClickListener(onDeleteClickListener);
         }
     }
 }

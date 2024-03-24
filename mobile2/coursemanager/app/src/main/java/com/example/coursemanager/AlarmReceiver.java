@@ -1,4 +1,4 @@
-package com.example.simpletodo;
+package com.example.coursemanager;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;

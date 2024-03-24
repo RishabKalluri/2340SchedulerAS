@@ -2,8 +2,12 @@ package com.example.coursemanager.services;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.io.Serializable;
+import java.io.Serializable;
+
+
 @Entity
-public class Course {
+public class Course implements Serializable {
     @PrimaryKey(autoGenerate = true)
     private int id;
 

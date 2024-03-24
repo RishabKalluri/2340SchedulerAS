@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
-import com.example.simpletodo.TaskItem;
+import com.example.coursemanager.TaskItem;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -27,7 +27,7 @@ public class TaskItemAdapter extends ArrayAdapter<TaskItem> {
     public View getView(int position, View convertView, ViewGroup parent) {
         TaskItem taskItem = getItem(position); // Get the item at this position
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item_task, parent, false);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.todo_list_item_task, parent, false);
         }
 
         TaskItem currentItem = getItem(position);

@@ -6,10 +6,31 @@
             app:startDestination="@id/fragment_course">
 
     <fragment
+            android:id="@+id/fragment_course"
+            android:name="com.example.coursemanager.CourseFragment"
+            android:label="CourseFragment" >
+        <action
+                android:id="@+id/action_courseFragment_to_editCourseFragment"
+                app:destination="@id/editCourseFragment" />
+        <action
+                android:id="@+id/action_courseFragment_to_examFragment"
+                app:destination="@id/examFragment" />
+
+    </fragment>
+
+
+
+
+    <fragment
+            android:id="@+id/editCourseFragment"
+            android:name="com.example.coursemanager.EditCourseFragment"
+            android:label="Edit Course" />
+
+    <fragment
             android:name="com.example.coursemanager.CourseFragment"
             android:label="@string/first_fragment_label"
             tools:layout="@layout/fragment_course"
-            android:id="@+id/fragment_course">
+            android:id="@+id/fragment_course_second">
 
         <action
                 android:id="@+id/action_courseFragment_to_addCourseFragment"
@@ -54,6 +75,9 @@
             android:name="com.example.coursemanager.ExamFragment"
             android:label="Exams" >
         <action
+                android:id="@+id/action_examFragment_to_editExamFragment"
+                app:destination="@id/editExamFragment" />
+        <action
                 android:id="@+id/action_examFragment_to_courseFragment"
                 app:destination="@id/fragment_course" />
         <action
@@ -61,5 +85,10 @@
                 app:destination="@id/addExamFragment"/>
 
     </fragment>
+
+    <fragment
+            android:id="@+id/editExamFragment"
+            android:name="com.example.coursemanager.EditExamFragment"
+            android:label="Edit Exam" />
 
 </navigation>

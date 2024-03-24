@@ -20,7 +20,6 @@ import android.widget.Switch;
 
 import com.example.coursemanager.MainActivity;
 import com.example.coursemanager.R;
-import com.example.simpletodo.TaskItem;
 import com.example.coursemanager.TaskItemAdapter;
 
 import java.util.ArrayList;
@@ -91,24 +90,6 @@ public class TodoActivity extends Activity {
 
 
     @SuppressLint("ScheduleExactAlarm")
-    private void scheduleNotification(TaskItem task) {
-        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(this, com.example.simpletodo.AlarmReceiver.class);
-        intent.putExtra("task_description", task.getDescription());
-
-        PendingIntent alarmIntent = PendingIntent.getBroadcast(this, 123, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE); // Ensure unique ID for each task
-
-        // Schedule the alarm
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(task.getDatetime());
-        calendar.add(Calendar.MINUTE, -5); // Set 5 minutes before the task time
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), alarmIntent);
-        } else {
-            alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), alarmIntent);
-        }
-    }
     private void sortByDate() {
         Collections.sort(items, new Comparator<TaskItem>() {
             @Override

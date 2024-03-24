@@ -2,8 +2,10 @@ package com.example.coursemanager.services;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.io.Serializable;
+
 @Entity
-public class Exam {
+public class Exam implements Serializable {
     @PrimaryKey(autoGenerate = true)
     private int id;
     private String examName;
@@ -15,7 +17,6 @@ public class Exam {
     public int getId() {
         return id;
     }
-
     public void setId(int id) {
         this.id = id;
     }

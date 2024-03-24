@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -46,8 +47,12 @@ public class ExamFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 int position = (int) v.getTag();
+                Exam examToEdit = examList.get(position);
                 Bundle bundle = new Bundle();
-                bundle.putInt("examPosition", position);
+                bundle.putSerializable("examToEdit", examToEdit);
+
+                NavController navController = Navigation.findNavController(v);
+                navController.navigate(R.id.action_examFragment_to_editExamFragment, bundle);
             }
         };
 
