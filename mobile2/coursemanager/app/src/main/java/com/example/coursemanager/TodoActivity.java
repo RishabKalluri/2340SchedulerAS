@@ -1,4 +1,4 @@
-package com.example.simpletodo;
+package com.example.coursemanager;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -19,9 +19,9 @@ import android.widget.ListView;
 import android.widget.Switch;
 
 import com.example.coursemanager.MainActivity;
-import com.example.simpletodo.R;
-import com.example.simpletodo.TaskItem;
-import com.example.simpletodo.TaskItemAdapter;
+import com.example.coursemanager.R;
+import com.example.coursemanager.TaskItem;
+import com.example.coursemanager.TaskItemAdapter;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -51,11 +51,11 @@ public class TodoActivity extends Activity {
 
         Button addDateTimeButton = findViewById(R.id.btnAddDateTime);
         addDateTimeButton.setOnClickListener(view -> {
-            new DatePickerDialog(MainActivity.this, (datePicker, year, month, day) -> {
+            new DatePickerDialog(TodoActivity.this, (datePicker, year, month, day) -> {
                 calendar.set(Calendar.YEAR, year);
                 calendar.set(Calendar.MONTH, month);
                 calendar.set(Calendar.DAY_OF_MONTH, day);
-                new TimePickerDialog(MainActivity.this, (timePicker, hourOfDay, minute) -> {
+                new TimePickerDialog(TodoActivity.this, (timePicker, hourOfDay, minute) -> {
                     calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
                     calendar.set(Calendar.MINUTE, minute);
                 }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), true).show();
@@ -91,24 +91,6 @@ public class TodoActivity extends Activity {
 
 
     @SuppressLint("ScheduleExactAlarm")
-    private void scheduleNotification(TaskItem task) {
-        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(this, com.example.simpletodo.AlarmReceiver.class);
-        intent.putExtra("task_description", task.getDescription());
-
-        PendingIntent alarmIntent = PendingIntent.getBroadcast(this, 123, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE); // Ensure unique ID for each task
-
-        // Schedule the alarm
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(task.getDatetime());
-        calendar.add(Calendar.MINUTE, -5); // Set 5 minutes before the task time
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), alarmIntent);
-        } else {
-            alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), alarmIntent);
-        }
-    }
     private void sortByDate() {
         Collections.sort(items, new Comparator<TaskItem>() {
             @Override

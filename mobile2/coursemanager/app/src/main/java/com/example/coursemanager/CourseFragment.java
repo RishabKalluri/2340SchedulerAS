@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,6 +21,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -64,8 +66,15 @@ public class CourseFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 int position = (int) v.getTag();
+                Course courseToEdit = courseList.get(position);
                 Bundle bundle = new Bundle();
                 bundle.putInt("coursePosition", position);
+                bundle.putSerializable("courseToEdit", courseToEdit);
+
+                NavController navController = Navigation.findNavController(v);
+                navController.navigate(R.id.action_courseFragment_to_editCourseFragment, bundle);
+
+
             }
         };
 
@@ -80,8 +89,7 @@ public class CourseFragment extends Fragment {
             }
         };
 
-        courseAdapter = new CourseAdapter(new ArrayList<>(), courseDao, onEditClickListener, onDeleteClickListener);
-        recyclerView.setAdapter(courseAdapter);
+        courseAdapter = new CourseAdapter(new ArrayList<>(), courseDao, onEditClickListener, onDeleteClickListener);        recyclerView.setAdapter(courseAdapter);
         Button button = view.findViewById(R.id.nav_to_exam_button);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
