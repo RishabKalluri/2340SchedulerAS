@@ -1,21 +1,27 @@
 package com.example.coursemanager;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import androidx.fragment.app.Fragment;
 import androidx.room.Room;
 import com.example.coursemanager.services.AppDatabase;
 import com.example.coursemanager.services.Exam;
 import com.example.coursemanager.services.ExamDao;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
 
 public class EditExamFragment extends Fragment {
     private AppDatabase db;
     private ExamDao examDao;
     private Exam examToEdit;
+    final Calendar calendar = Calendar.getInstance();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -39,6 +45,29 @@ public class EditExamFragment extends Fragment {
         date.setText(examToEdit.getDate());
         location.setText(examToEdit.getLocation());
 
+        date.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    int year = calendar.get(Calendar.YEAR);
+                    int month = calendar.get(Calendar.MONTH);
+                    int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+                    DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(),
+                            new DatePickerDialog.OnDateSetListener() {
+                                @Override
+                                public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                                    calendar.set(Calendar.YEAR, year);
+                                    calendar.set(Calendar.MONTH, month);
+                                    calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                                    updateLabel(date);
+                                }
+                            }, year, month, day);
+                    datePickerDialog.show();
+                }
+            }
+        });
+
         Button editButton = view.findViewById(R.id.edit_button);
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,5 +88,12 @@ public class EditExamFragment extends Fragment {
         });
 
         return view;
+    }
+
+    private void updateLabel(EditText date) {
+        String myFormat = "MM/dd/yy";
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+
+        date.setText(sdf.format(calendar.getTime()));
     }
 }
