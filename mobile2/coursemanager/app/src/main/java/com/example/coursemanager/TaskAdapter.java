@@ -101,12 +101,13 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
     }
 
     public static class TaskViewHolder extends RecyclerView.ViewHolder {
-        public TextView taskName, dueDate;
+        public TextView taskName, dueDate, courseName;
         public CheckBox taskCompleted;
         public Button deleteButton, editButton;
 
         public TaskViewHolder(View view) {
             super(view);
+            courseName = view.findViewById(R.id.course_name);
             taskName = view.findViewById(R.id.task_name);
             dueDate = view.findViewById(R.id.due_date);
             deleteButton = view.findViewById(R.id.deleteButton);
