@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
@@ -70,6 +71,8 @@ public class ExamFragment extends Fragment {
         examAdapter = new ExamAdapter(new ArrayList<>(), examDao, onEditClickListener, onDeleteClickListener);
         recyclerView.setAdapter(examAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL));
+
 
 
         Button todoButton2 = view.findViewById(R.id.todo_button_2);
